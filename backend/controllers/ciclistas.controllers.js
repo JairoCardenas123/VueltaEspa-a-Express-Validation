@@ -1,4 +1,4 @@
-import ciclistaSchema from "../models/usuario.js";
+import Ciclista from "../models/usuario.js";
 import bcryptjs from  "bcryptjs"
 
 const getCiclistas = (req,res)=>{
@@ -8,10 +8,10 @@ const getCiclistas = (req,res)=>{
 }
 const postCilistas = async(req,res)=>{
     const {nombre,email,password,rol}= req.body;
-    const usuario = new ciclistaSchema({nombre,email,password,rol})
+    const ciclistas = new Ciclista({nombre,email,password,rol})
 
     //Verificar si el correo ya existe(duplicado)
-    const existeEmail = await ciclistaSchema.findOne({email});
+    const existeEmail = await Ciclista.findOne({email});
     if(existeEmail){
         return res.status(400).json({
             msg:"Email is already registered"
@@ -21,12 +21,12 @@ const postCilistas = async(req,res)=>{
 
     //Encriptar nuestra contraseña
     const salt = bcryptjs.genSaltSync();
-    usuario.password = bcryptjs.hashSync(password,salt)
+    ciclistas.password = bcryptjs.hashSync(password,salt)
 
-    await usuario.save()
+    await ciclista.save()
     res.json({
         "message":"post api",
-        usuario
+        ciclistas
     })
 }
 
