@@ -1,4 +1,4 @@
-import { Schema,model } from "mongoose"
+const {Schema,model} = require('mongoose')
 
 const ciclistaSchema = Schema({
     nombre:{
@@ -28,9 +28,9 @@ const ciclistaSchema = Schema({
     },
     googleSingIn:{
         type:Boolean,
-        default:'USER'
+        default:true
     }
 })
 
-const ciclista = model('Cilista',ciclistaSchema)
-export default ciclista
+module.exports = model('Cilista',ciclistaSchema)
+

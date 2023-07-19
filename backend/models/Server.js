@@ -1,17 +1,17 @@
-import express from "express"
-import cors from "cors"
-import conectarDB from "../database/config.js"
-import router from "../routes/ciclista.routes.js"
+const express = require('express');
+const cors = require('cors');
+const conectarDB = require('../database/config.js')
 
 class Server{
     constructor(){
         this.app = express()
         this.port = process.env.PORT
-        this.ciclista = "/api/ciclista"
+        this.ciclista = "/api/ciclista/"
 
         this.conectarDB()
         this.middlewares()
         this.routes()
+        this.conectarDB()
     }
 
     async conectarDB(){
@@ -25,8 +25,7 @@ class Server{
     }
 
     routes(){
-        this.app.use(this.ciclista,router);
-
+        this.app.use(this.ciclista,require('../routes/ciclista.routes.js'));
     }
 
     listen(){
@@ -36,4 +35,4 @@ class Server{
     }
 }
 
-export default Server
+module.exports = Server

@@ -1,12 +1,12 @@
-import Ciclista from "../models/usuario.js";
-import bcryptjs from  "bcryptjs"
-
-const getCiclistas = (req,res)=>{
+const Ciclista = require('../models/usuario.js')
+const bcryptjs = require('bcryptjs')
+const getCiclistas = (req,res)=>{    
     res.status(403).json({
         "message":"home page"
     })
 }
 const postCilistas = async(req,res)=>{
+
     const {nombre,email,password,rol}= req.body;
     const ciclistas = new Ciclista({nombre,email,password,rol})
 
@@ -16,14 +16,12 @@ const postCilistas = async(req,res)=>{
         return res.status(400).json({
             msg:"Email is already registered"
         })
-
     }
-
     //Encriptar nuestra contraseña
     const salt = bcryptjs.genSaltSync();
     ciclistas.password = bcryptjs.hashSync(password,salt)
 
-    await ciclista.save()
+    await ciclistas.save()
     res.json({
         "message":"post api",
         ciclistas
@@ -49,4 +47,10 @@ const patchCiclistas = (req,res)=>{
     })
 }
 
-export {getCiclistas,deleteCilistas,putCiclistas,patchCiclistas,postCilistas}
+module.exports = {
+    getCiclistas,
+    postCilistas,
+    deleteCilistas,
+    putCiclistas,
+    patchCiclistas
+}

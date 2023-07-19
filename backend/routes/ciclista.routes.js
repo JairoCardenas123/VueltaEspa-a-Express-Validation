@@ -1,15 +1,15 @@
-import Router from "express"
-import {check} from "express-validator"
-import {getCiclistas,deleteCilistas,putCiclistas,patchCiclistas,postCilistas} from "../controllers/ciclistas.controllers.js"
-import validateDocument from "../middlewares/validate.documents.js"
-import RoleSchema from "../models/Role.js"
+const {Router} = require('express')
+const {check} = require('express-validator')
+const {getCiclistas,postCilistas,deleteCilistas,putCiclistas,patchCiclistas} = require('../controllers/ciclistas.controllers.js');
+const { validateDocuments } = require('../middlewares/validate.documents.js')
+  
+
+const Role = require('../models/Role.js');    
+const route = Router();
 
 
-const router = Router();
-
-
-router.get("/",getCiclistas)
-router.post("/",[
+route.get("/",getCiclistas)
+route.post("/",[
     check('nombre','nombre no es valido').not().isEmpty(),
     check('password','password debe de ser minimo 6 letras').isLength({min:6}),
     check('email','el correo no es valido').isEmail(),
@@ -20,12 +20,11 @@ router.post("/",[
             throw new Error(`El rol ${rol} no esta registrado en la base de datos`)
         }
     }),
-     validateDocument
-
+     validateDocuments
 ],postCilistas);
-router.delete("/",deleteCilistas)
-router.put("/",putCiclistas)
-router.patch("/",patchCiclistas)
+route.delete("/",deleteCilistas)
+route.put("/",putCiclistas)
+route.patch("/",patchCiclistas)
 
-export default router;
+module.exports = route
 

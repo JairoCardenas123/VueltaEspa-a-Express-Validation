@@ -1,11 +1,12 @@
-import validationResult from "express-validator"
+// validate.documents.js
+const { validationResult } = require('express-validator');
 
-const validateDocument = (req,res,next)=>{
+const validateDocument = (req, res, next) => {
     const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json(errors)
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
     }
-    next()
+    next();
 }
 
-export default validateDocument
+module.exports = { validateDocument };
